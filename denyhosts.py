@@ -1,13 +1,13 @@
 #!/usr/bin/env python
+#-*- coding: utf-8 -*-
+import getopt
+import logging
 import os
 import sys
+import traceback
+from glob import glob
 
 import DenyHosts.python_version
-
-import getopt
-import traceback
-import logging
-
 from DenyHosts.util import die, setup_logging, is_true
 from DenyHosts.lockfile import LockFile
 from DenyHosts.prefs import Prefs
@@ -120,7 +120,9 @@ if __name__ == '__main__':
     setup_logging(prefs, enable_debug, verbose, daemon)
     
     if not logfiles or daemon:
-        logfiles = [prefs.get('SECURE_LOG')]
+        filelist = prefs.get('SECURE_LOG').split(',')
+        for logfile in logfiles:
+            logfiles += glob(logfile.strip())
     elif len(logfiles) > 1:
         ignore_offset = 1
 
