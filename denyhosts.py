@@ -121,7 +121,7 @@ if __name__ == '__main__':
     
     if not logfiles or daemon:
         filelist = prefs.get('SECURE_LOG').split(',')
-        for logfile in logfiles:
+        for logfile in filelist:
             logfiles += glob(logfile.strip())
     elif len(logfiles) > 1:
         ignore_offset = 1
